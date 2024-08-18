@@ -5,17 +5,11 @@ from .models import *
 
 
 def check_form(info, username, password, repeat_password, age):
-    # Получаем текущих пользователей
-    info["users"] = list()
-    users = Buyer.objects.all()
-    for user in users:
-        info["users"].append(user.name)
-
     if password != repeat_password:
         info["error"] = "Пароли не совпадают"
     elif int(age) < 18:
         info["error"] = "Вы должны быть старше 18"
-    elif username in info["users"]:
+    elif Buyer.objects.filter(name=username).exists():
         info["error"] = "Пользователь уже существует"
 
 
