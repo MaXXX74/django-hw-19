@@ -4,10 +4,18 @@ from django.utils import timezone
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=255)
-    body = models.TextField()
-    created = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
+    title = models.CharField(max_length=255, verbose_name='Заголовок поста')
+    body = models.TextField(verbose_name='Текст поста')
+    # created = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(default=timezone.now, verbose_name='Дата создания')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts", verbose_name='Автор')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Пост'
+        verbose_name_plural = 'Посты'
 
 
 class Buyer(models.Model):
